@@ -14,10 +14,10 @@ using std::cin;
     Returns:
         number (int) : random number in range [min; max]
 ***/
-int generateRandomNumber(const int min, const int max)
+int generateRandomNumber (const int min, const int max)
 {
     // TODO: Return a random integer number between min and max
-    return rand( max-min +1) +min ;
+    return rand()%(max-min +1) +min ;
     // return 1;
 }
 
@@ -163,14 +163,14 @@ void processData(const char ch, const string& word,
             update incorrectGuess: call updateIncorrectGuess() function
             update incorrectChars: call updateEnteredChars() function
     ***/
-   if ( isCharInWord(ch))
+   if ( isCharInWord(ch,word))
     {
         updateSecretWord(secretWord,ch,word);
         updateEnteredChars(ch,correctChars);
     }
     else
     {
-        incorrectGuess();
+        updateIncorrectGuess( incorrectGuess);
         updateEnteredChars(ch,incorrectChars);
     }
 }
