@@ -28,10 +28,10 @@ vector<string> filterWordsByLen(int wordLen, const vector<string>& vocabulary)
 {
     vector<string> answer;
     //Write your code here
-    for (int i=0; i< int(vocabulary.length()); i++)  
+    for (const string& word : vocabulary)  
         {
-            if ( wordLen == int ( vocabulary[i].length() ))
-                answer.push_back(vocabulary[i]);
+            if ( wordLen == int ( word.length() ))
+                answer.push_back(word);
         }
     return answer;
 }
@@ -155,7 +155,7 @@ bool isCorrectChar(char ch, const string& mask)
 {
     bool answer = false ;
     //Write your code here
-    for (char ch1 :  mark )
+    for (char ch1 :  mask )
         {
             if ( ch1 == ch)
                 {
@@ -210,7 +210,7 @@ bool wordConformToMask(const string& word, const string& mask, char ch)
         }
     for (int i=0; i < int(word.length()) ; i++)
         {       
-            if ( word[i] != mask[i]  &&  mark[i] != '_')
+            if ( word[i] != mask[i]  &&  mask[i] != '_')
                 {
                     answer = false;
                     ch = word[i];
