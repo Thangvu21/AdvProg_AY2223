@@ -15,8 +15,7 @@ using namespace std;
 int generateRandomNumber() {
     // TODO: Return the random number in range 1 to 100
     srand(time(0));
-    int RandomNumber = rand() %100 + 1;
-        return RandomNumber;  
+    return rand() %100 + 1;;  
 }
 
 
@@ -52,11 +51,11 @@ string getAnswer(int number, int randomNumber) {
     string answer;         
     if ( number>randomNumber)
         {
-            answer = "Your number is too big" ;
+            answer = "Your number is higher.";
         }
     else if ( number < randomNumber)
         {
-            answer = "Your number is too small" ;
+            answer = "Your number is lower.";
         }
     else
         {
