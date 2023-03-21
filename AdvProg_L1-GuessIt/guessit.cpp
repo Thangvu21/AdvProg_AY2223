@@ -76,7 +76,7 @@ bool checkSuccess(string answer) {
     if ( answer !="Congratulation! You win." )
         return false;
     else
-    return true;
+        return true;
 }
 
 
