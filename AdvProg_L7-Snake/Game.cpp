@@ -27,6 +27,7 @@ Game::Game(int _width, int _height)
 Game::~Game()
 {
     //dtor
+
 }
 
 
@@ -57,6 +58,26 @@ void Game::snakeMoveTo(Position pos) {
 	//
 	//
 	// END CODE HERE
+	if ( ! pos.isInsideBox(0,0,width,height))
+		{
+			status = GAME_OVER;
+		}
+	else
+		{
+			if ( squares[pos.y][pos.x] == CELL_SNAKE)
+				status = GAME_OVER;
+			else
+				{
+					if ( getCellType(pos) == CELL_CHERRY)
+						{
+							score++;
+							snake.eatCherry();
+							addCherry();
+							setCellType(pos,CELL_SNAKE);
+						}
+				}
+			
+		}
 }
 
 
@@ -78,6 +99,7 @@ void Game::snakeLeave(Position position)
 	//
 	//
 	// END CODE HERE
+	setCellType(position,CELL_EMPTY);
 }
 
 
@@ -103,9 +125,7 @@ void Game::processUserInput(Direction direction)
  * 
  ***/
 bool Game::canChange(Direction current, Direction next) const {
-	if (current == UP || current == DOWN) 
-		return 0; // YOUR CODE HERE
-	return 0;// YOUR CODE HERE
+	return ( (current != UP && next == DOWN)|| (current != DOWN && next == UP) || (current != LEFT && next == RIGHT) || (current == LEFT && next != RIGHT))  ;
 }
 
 
@@ -136,6 +156,7 @@ void Game::nextStep()
 		// check if snake can move to the next direction, set current direction as next
         if (canChange(currentDirection, next)) {
         	// YOUR CODE HERE
+			currentDirection = next;
         	break;
 		}
     }
@@ -163,12 +184,15 @@ void Game::addCherry()
 		// Suggestion: use rand() function
 
         Position randomPos; // YOUR CODE HERE
-		
+		randomPos.x = rand() % width;
+		randomPos.y = rand() % height;
+
 		// check if the randomPos is EMPTY 
         if (getCellType(randomPos) == CELL_EMPTY) {
 
         	// assign the cherry position as randomPos, and set randomPos type as CELL_CHERRY
-
+			cherryPosition = randomPos;
+			setCellType(randomPos,CELL_CHERRY);
 			// YOUR CODE HERE
 			// YOUR CODE HERE
 
@@ -199,6 +223,10 @@ void Game::setCellType(Position pos, CellType cellType)
 	// START CODE HERE
 	//  
 	// END CODE HERE
+	if ( pos.isInsideBox( 0 ,0 , width , height))
+		{
+			squares[pos.y][pos.x]=cellType;
+		}
 }
 
 
