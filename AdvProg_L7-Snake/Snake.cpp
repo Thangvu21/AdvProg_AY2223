@@ -25,7 +25,8 @@ Snake::~Snake()
             p = nextNode;
     }
     */
-   for ( SnakeNode* p = tail ; p != nullptr ; )
+   SnakeNode* p = this->tail;
+   while(p!= NULL)
         {
             SnakeNode * nextNode = p-> next;
             // delete p;
@@ -105,8 +106,8 @@ void Snake::slideTo(Position newPosition)
 		// move it to the head of the snake
         /* YOUR CODE HERE */
         oldTailNode -> position = newPosition ;
-		head = oldTailNode;
-
+		head->next = oldTailNode;
+        head = oldTailNode;
 	}
 }
 
@@ -124,7 +125,7 @@ void Snake::slideTo(Position newPosition)
 ***/
 void Snake::eatCherry()
 {
-    ++ cherry;
+    cherry+=1;
 	/* YOUR CODE HERE */
 }
 
