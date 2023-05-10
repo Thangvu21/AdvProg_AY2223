@@ -25,11 +25,10 @@ Snake::~Snake()
             p = nextNode;
     }
     */
-   SnakeNode* p = this->tail;
-   while(p!= NULL)
+   for (SnakeNode * p =tail; p!= nullptr;)
         {
             SnakeNode * nextNode = p-> next;
-            // delete p;
+            
             delete p;
             p = nextNode;
         }
@@ -60,7 +59,7 @@ vector<Position> Snake::getPositions() const
 void Snake::growAtFront(Position newPosition)
 {
     // head of snake grow at new position
-	head -> next = new SnakeNode (newPosition,nullptr);
+	head -> next = new SnakeNode (newPosition);
     head = head->next;
 
     /* YOUR CODE HERE */
@@ -165,6 +164,7 @@ void Snake::move(Direction direction)
     /* YOUR CODE HERE */
 
     // If cherry > 0, cherry descrease one and growAtFront() with newPosition
+    if (game.isGameOver())  return;
     if (cherry > 0) {
         /* YOUR CODE HERE */
         cherry--;

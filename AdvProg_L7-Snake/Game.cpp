@@ -85,8 +85,6 @@ void Game::snakeMoveTo(Position pos) {
 		break;
 
 	case CELL_SNAKE:
-		status = GAME_OVER;
-		break;
 	
 	case CELL_CHERRY:
 		score++;
@@ -96,6 +94,9 @@ void Game::snakeMoveTo(Position pos) {
 	
 	case CELL_EMPTY:
 		setCellType(pos,CELL_SNAKE);
+		break;
+	default:
+		snake.slideTo(pos);
 		break;
 	}
 }
