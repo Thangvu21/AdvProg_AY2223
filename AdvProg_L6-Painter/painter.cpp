@@ -6,11 +6,17 @@
     Returns:
         None
 ***/
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+int random(int l, int r)
+{
+    return rng() % (r - l + 1) + l;
+}
 void Painter::setColor(SDL_Color color) 
 { 
     // TODO: set the color value for the Painter and set Render Draw Color
     this->color = color;
-    SDL_SetRenderDrawColor(this->renderer,color.r,color.g,color.b,color.a);
+    SDL_SetRenderDrawColor(this->renderer, color.r, color.g, color.b, color.a);
 }
 
 
@@ -23,8 +29,8 @@ void Painter::setColor(SDL_Color color)
 void Painter::jumpForward(int numPixel)
 {
     // TODO: jump the painter forward
-    this->x += numPixel*(cos(this->angle *M_PI/180));
-    this->y -= numPixel*(sin(this->angle *M_PI/180));
+    this->x += numPixel * cos(angle / 180 * M_PI);
+    this->y -= numPixel * sin(angle / 180 * M_PI);
 }
 
 
@@ -37,8 +43,8 @@ void Painter::jumpForward(int numPixel)
 void Painter::jumpBackward(int numPixel)
 {
     // TODO: jump the painter backward
-    this->x -= numPixel*(cos(this->angle *M_PI/180));
-    this->y += numPixel*(sin(this->angle *M_PI/180));
+    this->x -= numPixel * cos(angle / 180 * M_PI);
+    this->y += numPixel * sin(angle / 180 * M_PI);
 }
 
 
