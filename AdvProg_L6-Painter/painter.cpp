@@ -6,11 +6,11 @@
     Returns:
         None
 ***/
-void Painter::setColor(SDL_Color c) 
+void Painter::setColor(SDL_Color color) 
 { 
     // TODO: set the color value for the Painter and set Render Draw Color
-    color = c;
-    SDL_SetRenderDrawColor(renderer,c.r,c.g,c.b,c.a);
+    this->color = color;
+    SDL_SetRenderDrawColor(this->renderer,color.r,color.g,color.b,color.a);
 }
 
 
@@ -23,11 +23,8 @@ void Painter::setColor(SDL_Color c)
 void Painter::jumpForward(int numPixel)
 {
     // TODO: jump the painter forward
-    double rad = M_PI*angel/180;
-    int diffX = numPixel*cos(rad);
-    int diffY = -numPixel*sin(rad);
-    x+=diffX;
-    y+=diffY;
+    this->x += numPixel*(cos(this->angle *M_PI/180));
+    this->y -= numPixel*(sin(this->angle *M_PI/180));
 }
 
 
@@ -40,11 +37,8 @@ void Painter::jumpForward(int numPixel)
 void Painter::jumpBackward(int numPixel)
 {
     // TODO: jump the painter backward
-    double rad = M_PI*angel/180;
-    int diffX = -numPixel*cos(rad);
-    int diffY = numPixel*sin(rad);
-    x+=diffX;
-    y+=diffY;
+    this->x -= numPixel*(cos(this->angle *M_PI/180));
+    this->y += numPixel*(sin(this->angle *M_PI/180));
 }
 
 
@@ -57,10 +51,10 @@ void Painter::jumpBackward(int numPixel)
 void Painter::turnLeft(double degree)
 {
     // TODO: rotate left the painter   
-    angle = angel+degree;
-    if (angel >= 360)
+    this->angel+=degree;
+    while (this->angel >= 360)
         {
-            angel = -360;
+            this->angel = -360;
         }
 }
 
@@ -74,11 +68,16 @@ void Painter::turnLeft(double degree)
 void Painter::turnRight(double degree)
 {
     // TODO: rotate right the painter   
-    angle = angel-degree;
-    if (angel >= 360)
+    this->angel-=degree;
+    while (this->angel >= 360)
         {
-            angel = -360;
+            this->angel = -360;
         }
+    while (this->angle < 0)
+    {
+        this->angel += 360;
+    }
+    
 }
 
 /***  
@@ -90,7 +89,9 @@ void Painter::turnRight(double degree)
 void Painter::randomColor()
 {
     // TODO: set random color    
-    SDL_SetRenderDrawColor(renderer,0xFF,0xFF,0xFF,0xFF);
+    Uint8 r = rand()%256 , g = rand()%256 , b =rand()%256;
+    SDL_Color ans = {r,g,b};
+    this->color = ans;
 }
 
 
