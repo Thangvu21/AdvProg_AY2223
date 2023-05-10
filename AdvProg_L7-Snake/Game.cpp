@@ -80,20 +80,14 @@ void Game::snakeMoveTo(Position pos) {
 	// 	}
 	switch (getCellType(pos))
 	{
-	case CELL_OFF_BOARD :
-		status= GAME_OVER;
-		break;
-
 	case CELL_SNAKE:
-	
+	case CELL_OFF_BOARD:
+		status = GAME_OVER;
+		break;
 	case CELL_CHERRY:
-		score++;
+		++score;
 		snake.eatCherry();
 		addCherry();
-		break;
-	
-	case CELL_EMPTY:
-		setCellType(pos,CELL_SNAKE);
 		break;
 	default:
 		snake.slideTo(pos);
@@ -120,7 +114,7 @@ void Game::snakeLeave(Position position)
 	//
 	//
 	// END CODE HERE
-	setCellType(position,CELL_EMPTY);
+	setCellType(position, CELL_EMPTY);
 }
 
 
@@ -146,7 +140,11 @@ void Game::processUserInput(Direction direction)
  * 
  ***/
 bool Game::canChange(Direction current, Direction next) const {
-	return ( (current != UP && next == DOWN)|| (current != DOWN && next == UP) || (current != LEFT && next == RIGHT) || (current == LEFT && next != RIGHT))  ;
+	if ((current == UP || current == DOWN) && (next == UP || next == DOWN))
+		return 0;
+	if ((current == LEFT || current == RIGHT) && (next == LEFT || next == RIGHT))
+		return 0;
+	return 1;
 }
 
 
@@ -167,22 +165,17 @@ bool Game::canChange(Direction current, Direction next) const {
 
 void Game::nextStep()
 {
-	while (!inputQueue.empty()) {
-		// get the input direction from input queue
-        Direction next ; // YOUR CODE HERE
-
-		// remove the front of input queue
-        // YOUR CODE HERE
-
-		// check if snake can move to the next direction, set current direction as next
-        if (canChange(currentDirection, next)) {
-        	// YOUR CODE HERE
+	while (!inputQueue.empty())
+	{ Direction next;
+		next = inputQueue.front();
+		inputQueue.pop();
+		if (canChange(currentDirection, next))
+		{
 			currentDirection = next;
-        	break;
+			break;
 		}
     }
-
-    snake.move(currentDirection);
+	snake.move(currentDirection);
 }
 
 
@@ -200,26 +193,17 @@ void Game::nextStep()
 
 void Game::addCherry()
 {
-    do {
-		// init a random position inside the play screen (width, height)
-		// Suggestion: use rand() function
-
-        Position randomPos; // YOUR CODE HERE
-		randomPos.x = rand() % width;
-		randomPos.y = rand() % height;
-
-		// check if the randomPos is EMPTY 
-        if (getCellType(randomPos) == CELL_EMPTY) {
-
-        	// assign the cherry position as randomPos, and set randomPos type as CELL_CHERRY
+    do
+	{
+		Position randomPos;
+		randomPos = Position(rand() % width, rand() % height);
+		if (getCellType(randomPos) == CELL_EMPTY)
+		{
 			cherryPosition = randomPos;
-			setCellType(randomPos,CELL_CHERRY);
-			// YOUR CODE HERE
-			// YOUR CODE HERE
-
-       		break;
-        }
-    } while (true);
+			setCellType(randomPos, CELL_CHERRY);
+			break;
+		}
+	} while (true);
 }
 
 
